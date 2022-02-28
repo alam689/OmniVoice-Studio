@@ -26,4 +26,3 @@ select * from opadvice where xzonedel='DHAKA SOUTH'
 select * from cadelpoint where xzone='DHAKA SOUTH'
 
 select * from cacusrate where xzone='DHAKA SOUTH'
-select * from cacustrrate where xzone='DHAKA SOUTH'
