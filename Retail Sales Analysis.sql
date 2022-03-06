@@ -38,7 +38,7 @@ select xzone,xcus,xorg,xid,xoutletname,xriid,
   when AVGSales between 1350 and 1649 then 'Slab_1500'  when AVGSales between 1650 and 2149 then 'Slab_1800'
   when AVGSales between 2150 and 2749 then 'Slab_2500'  when AVGSales between 2750 and 3499 then 'Slab_3000'
   when AVGSales between 3500 and 4499 then 'Slab_4000'  when AVGSales between 4500 and 5499 then 'Slab_5000'
-   when AVGSales>5499 'Slab_6000' else '' end
+   when AVGSales>5499 then 'Slab_6000' else '' end
  from outlettargetf 
 
 select xzone,xcus,xorg,xid,xoutletname,xriid,
