@@ -459,3 +459,17 @@ max(case when day(a.xdate)=31 then xouttime else '' end),max(case when day(a.xda
 max(case when day(a.xdate)=31 then No_of_Retail_Call else 0 end),max(case when day(a.xdate)=31 then Working_Hour else '' end)
 from SalesAttendancezi a join cadate d on a.zid=d.zid and a.xyear=d.xyear and a.xper=d.xper where   a.xyear=2021 and a.xper=09 --and a.xtsoid='002491'
 group by  xzone,xziid,a.xziname
+
+
+
+select h.xlocation,h.xemp,h.xname,h.xdesig,h.xdept,a.xdate, a.xintime,a.xouttime,
+FORMAT ((xintime), 'HH:mm:ss') xintime1,FORMAT ((xouttime), 'HH:mm:ss') xouttime,
+case when FORMAT ((xintime), 'HH:mm')>'09:35' then 'Late' else 'Present' end CheckIn, 
+case when FORMAT ((xouttime), 'HH:mm')<'18:30' then 'Early Leave' else '' end  CheckOut,
+CONVERT(varchar, DATEADD(second, DATEDIFF(ss, (xintime), (xouttime)), 0), 108) Working_Hour,
+(select count(*) from OutletCallLog where xriid=h.xemp and xdate=a.xdate)
+from Salesattendancemgt a join prmst h on a.xemp=h.xemp   where xdate>='2022-03-01'
+order by h.xemp
+
+select * from  OutletCalllog where xdate='2022-03-12' order by xriid
+select * from  aiziroutep where xdate='2022-03-12' order by xriid
