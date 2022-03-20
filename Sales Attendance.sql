@@ -462,14 +462,28 @@ group by  xzone,xziid,a.xziname
 
 
 
-select h.xlocation,h.xemp,h.xname,h.xdesig,h.xdept,a.xdate, a.xintime,a.xouttime,
+select h.xlocation,h.xemp,h.xname,h.xdesig,h.xsec,h.xdept,a.xdate, a.xintime,a.xouttime,
 FORMAT ((xintime), 'HH:mm:ss') xintime1,FORMAT ((xouttime), 'HH:mm:ss') xouttime,
 case when FORMAT ((xintime), 'HH:mm')>'09:35' then 'Late' else 'Present' end CheckIn, 
 case when FORMAT ((xouttime), 'HH:mm')<'18:30' then 'Early Leave' else '' end  CheckOut,
 CONVERT(varchar, DATEADD(second, DATEDIFF(ss, (xintime), (xouttime)), 0), 108) Working_Hour,
-(select count(*) from OutletCallLog where xriid=h.xemp and xdate=a.xdate)
-from Salesattendancemgt a join prmst h on a.xemp=h.xemp   where xdate>='2022-03-01'
+case when h.xsec='Route In-charge' then (select count(*) from OutletCallLog where xriid=h.xemp and xdate=a.xdate)
+else (select count(*) from OutletCalllogaizi where created_by=h.xemp and xdate=a.xdate) end
+from Salesattendancemgt a join prmst h on a.xemp=h.xemp   where xdate>='2022-03-01' and h.xemp='000046'
 order by h.xemp
+
+select xid,xdate,xriid,(select max(created_by)  from aiziroutep where xdate=OutletCalllog.xdate and xriid=OutletCalllog.xriid ) xziai,zi_call_status from 
+OutletCalllog where xdate='2022-03-14' and xriid='001466' order by xriid
+
+--(select created_by  from aiziroutep where xdate=OutletCalllog.xdate and xriid=OutletCalllog.xriid ) xziai,
+create view OutletCalllogaizi as 
+select 100000 zid,c.xid,c.xdate,c.xriid,c.zi_call_status,created_by from 
+OutletCalllog c join aiziroutep r on r.xriid=c.xriid and r.xdate=c.xdate 
+
+select xdate,xriid,count(*) from aiziroutep
+group by xdate,xriid 
+having count(*)>1
+order by xdate desc
 
 select * from  OutletCalllog where xdate='2022-03-12' order by xriid
 select * from  aiziroutep where xdate='2022-03-12' order by xriid
