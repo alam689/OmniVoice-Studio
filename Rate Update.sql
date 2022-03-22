@@ -96,11 +96,11 @@ zactive, zemail, xemail, xwh, 0, xnetrate+20, xdistrict, 0, xdesc
 group by xsimcardno,xbloodgrp
 order  by xsimcardno,xbloodgrp
 
-select xdiv,xzone,xcus,xorg,xwh,xdelivery,xdelpoint, xdornum,xitem,xtypecat,xrate,xchgdel,
-(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) TRRATE ,xqty,xqtychl,
-(select xnetrate from cacuscemrate where xcus=opdorddt.xcus and xitem=opdorddt.xitem and xdateto='2022-03-06') from opdorddt 
+select xdiv,xzone,xcus,xorg,xdate,xwh,xdelivery,xdelpoint, xdornum,xitem,xtypecat,xrate,xchgdel,
+(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) TRRATE ,'',xqty,xqtychl,
+(select xrem from cacuscemrate where xcus=opdorddt.xcus and xitem=opdorddt.xitem and xdateto='2022-03-06') from opdorddt 
 where xdate between '2022-03-06' and '2022-03-22' and xdiv not in ('Corporate', 'Export','Office Sales','Bag Plant')
 and xcus not in ('CUS-004009','CUS-000434','CUS-002975')
---and (select xnetrate from cacuscemrate where xcus=opdorddt.xcus and xitem=opdorddt.xitem and xdateto='2022-03-06') is null
 --and (select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) is null
+--and (select xnetrate from cacuscemrate where xcus=opdorddt.xcus and xitem=opdorddt.xitem and xdateto='2022-03-06') is null
 
