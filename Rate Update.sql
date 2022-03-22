@@ -72,7 +72,7 @@ select * from cacuscemrate where xcus='CUS-000004' and xitem='02-01-001-0005'
 select * from cacusrate where xcus='CUS-000004'
 
 
-----Rate Update New Query----------------
+----Rate Update New Query---------------- 22th March 2022
 
 -- Corporate Rate Update
  select xcus,xitem,xnetrate,xnetrate+10,xrem,zutime,getdate()   from cacusrate where  xcus in (select xcus from cacus where xsimcardno ='Corporate' ) 
