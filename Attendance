@@ -1,0 +1,11 @@
+select xdate,FORMAT (xintime, 'HH:mm:ss'),FORMAT (xouttime, 'HH:mm:ss'),
+xatdstat,xattype from pratd where xemp='002681' and xdate>='2021-08-26'
+order by xdate
+
+
+select xdate,FORMAT (xintime, 'HH:mm:ss'),FORMAT (xouttime, 'HH:mm:ss'),
+case when xatdstat='L' then 'Late'  when xatdstat='NP' and xattype='OD' then ''
+ when xatdstat='NP' and xattype='RD' then 'Absent'  when xatdstat='A' and xattype='RD' then 'Late'
+when xatdstat='P' then 'Present' else '' end,case when xattype='RD' then 'Working Day' 
+when xattype='OD' then 'OffDay' when xattype='HD' then 'HoliDay' else '' end ,xatdstat,xattype from pratd
+where xemp='002681' and xdate>='2022-01-26' order by xdate
