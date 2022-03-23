@@ -214,5 +214,67 @@ group by rollup (xdiv,Item)
 
 
 
+----------------NCML Trade --------------------------------------------
+with cte as (
+select xdiv,xzone,xitem,(select xitemold from caitem where xitem=opdorddt.xitem and zid=opdorddt.zid) Item, xqty,(xrate+
+case when xdelivery='Company' then xchgdel else
+(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) end) landed  from opdorddt 
+where xdate between '2022-02-01' and '2022-03-05' and xdiv<>'Corporate'
+--and xchgdel<>(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint)
+)
+select xdiv,xzone,Item,sum(xqty),sum(xqty*landed),sum(xqty*landed)/sum(xqty) from cte
+group by rollup (xdiv,xzone,Item)
 
+with cte as (
+select xdiv,xzone,xitem,(select xitemold from caitem where xitem=opdorddt.xitem and zid=opdorddt.zid) Item, xqty,(xrate+
+case when xdelivery='Company' then xchgdel else
+(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) end) landed  from opdorddt 
+where xdate between '2022-02-01' and '2022-03-05' and xdiv<>'Corporate'
+--and xchgdel<>(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint)
+)
+select xdiv,Item,sum(xqty),sum(xqty*landed),sum(xqty*landed)/sum(xqty) from cte
+group by rollup (xdiv,Item)
+
+-----------------------------------6th March 2022 to 15th March 2022--------------------------------
+
+with cte2 as (
+select xdiv,xzone,xitem,(select xitemold from caitem where xitem=opdorddt.xitem and zid=opdorddt.zid) Item, xqty,(xrate+
+case when xdelivery='Company' then xchgdel else
+(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) end) landed  from opdorddt 
+where xdate between '2022-03-06' and '2022-03-15' and xdiv<>'Corporate'
+--and xchgdel<>(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint)
+)
+select xdiv,xzone,Item,sum(xqty),sum(xqty*landed),sum(xqty*landed)/sum(xqty) from cte2
+group by rollup (xdiv,xzone,Item)
+
+with cte2 as (
+select xdiv,xzone,xitem,(select xitemold from caitem where xitem=opdorddt.xitem and zid=opdorddt.zid) Item, xqty,(xrate+
+case when xdelivery='Company' then xchgdel else
+(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) end) landed  from opdorddt 
+where xdate between '2022-03-06' and '2022-03-15' and xdiv<>'Corporate'
+--and xchgdel<>(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint)
+)
+select xdiv,Item,sum(xqty),sum(xqty*landed),sum(xqty*landed)/sum(xqty) from cte2
+group by rollup (xdiv,Item)
+
+-----------------------------------16th March 2022 to 22th March 2022--------------------------------
+with cte2 as (
+select xdiv,xzone,xitem,(select xitemold from caitem where xitem=opdorddt.xitem and zid=opdorddt.zid) Item, xqty,(xrate+
+case when xdelivery='Company' then xchgdel else
+(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) end) landed  from opdorddt 
+where xdate between '2022-03-16' and '2022-03-22' and xdiv<>'Corporate'
+--and xchgdel<>(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint)
+)
+select xdiv,xzone,Item,sum(xqty),sum(xqty*landed),sum(xqty*landed)/sum(xqty) from cte2
+group by rollup (xdiv,xzone,Item)
+
+with cte2 as (
+select xdiv,xzone,xitem,(select xitemold from caitem where xitem=opdorddt.xitem and zid=opdorddt.zid) Item, xqty,(xrate+
+case when xdelivery='Company' then xchgdel else
+(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) end) landed  from opdorddt 
+where xdate between '2022-03-16' and '2022-03-22' and xdiv<>'Corporate'
+--and xchgdel<>(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint)
+)
+select xdiv,Item,sum(xqty),sum(xqty*landed),sum(xqty*landed)/sum(xqty) from cte2
+group by rollup (xdiv,Item)
 
