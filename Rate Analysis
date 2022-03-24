@@ -1,3 +1,45 @@
+-------------------------Corporate-------------------------------------------
+with cte as (
+select  (select xdiv from cazone where xzone=opdorddt.xzone) xdiv,
+ (select xshort from cazone where xzone=opdorddt.xzone) xregion,  xzone,xdate, xitem,
+(select xitemold from caitem where xitem=opdorddt.xitem and zid=opdorddt.zid) Item, xqty,(xrate+
+case when xdelivery='Company' then xchgdel else
+(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) end) landed  from opdorddt 
+where xdate between '2022-02-01' and '2022-03-22'  and xdiv='Corporate' and xzone<>'CORPORATE SISTER CONCERN'
+--and xchgdel<>(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint)
+)
+select xdiv,xregion,Item,sum(case when xdate between '2022-02-01' and '2022-03-05' then  xqty else 0 end) DOqtyP,
+sum(case when xdate between '2022-02-01' and '2022-03-05' then  xqty*landed else 0 end) DOAmountP,
+--sum(case when xdate between '2022-02-01' and '2022-03-05' then  xqty*landed else 0 end)/sum(case when xdate between '2022-02-01' and '2022-03-05' then  xqty else 0 end) LandedP,
+sum(case when xdate between '2022-03-06' and '2022-03-22' then  xqty else 0 end) DOqty,
+sum(case when xdate between '2022-03-06' and '2022-03-22' then  xqty*landed else 0 end) DOAmount
+--sum(case when xdate between '2022-03-06' and '2022-03-22' then  xqty*landed else 0 end)/sum(case when xdate between '2022-03-06' and '2022-03-22' then  xqty else 0 end) Landed
+from cte
+group by rollup (xdiv,xregion,Item)
+
+-------------------------Trade-------------------------------------------
+with cte as (
+select  (select xdiv from cazone where xzone=opdorddt.xzone) xdiv,
+ (select xshort from cazone where xzone=opdorddt.xzone) xregion,  xzone,xdate, xitem,
+(select xitemold from caitem where xitem=opdorddt.xitem and zid=opdorddt.zid) Item, xqty,(xrate+
+case when xdelivery='Company' then xchgdel else
+(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint) end) landed  from opdorddt 
+where xdate between '2022-02-01' and '2022-03-22'  and xdiv not in ('Bag Plant','Office Sales','Export','Corporate')
+and xcus not in ('CUS-004009','CUS-000434','CUS-002975')
+--and xchgdel<>(select xchgdel from cacustrrate where xwh=opdorddt.xwh and xthana=opdorddt.xdelpoint)
+)
+select xdiv,xregion,Item,sum(case when xdate between '2022-02-01' and '2022-03-05' then  xqty else 0 end) DOqtyP,
+sum(case when xdate between '2022-02-01' and '2022-03-05' then  xqty*landed else 0 end) DOAmountP,
+--sum(case when xdate between '2022-02-01' and '2022-03-05' then  xqty*landed else 0 end)/sum(case when xdate between '2022-02-01' and '2022-03-05' then  xqty else 0 end) LandedP,
+sum(case when xdate between '2022-03-06' and '2022-03-22' then  xqty else 0 end) DOqty,
+sum(case when xdate between '2022-03-06' and '2022-03-22' then  xqty*landed else 0 end) DOAmount
+--sum(case when xdate between '2022-03-06' and '2022-03-22' then  xqty*landed else 0 end)/sum(case when xdate between '2022-03-06' and '2022-03-22' then  xqty else 0 end) Landed
+from cte
+group by rollup (xdiv,xregion,Item)
+
+
+
+
 ------------------------------------Cluster & Zone Wise--------------------------------------------
 -----------------------------------1st February to 5th March 2022--------------------------------- 
 with cte as (
