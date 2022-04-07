@@ -1,0 +1,9 @@
+ select xstatusord,xordernum,xappamt,(select SUM(xlineamt) from opodt where xordernum=opord.xordernum),
+ (select SUM(xlineamt) from opddt where xordernum=opord.xordernum) from opord where xcus='CUS-001632'
+ and (xstatusord <> 'C-Closed' AND xstatusord <> '1-Open' AND xstatusord <> '6-Held')
+ 
+    select * from opord where xordernum='PCMLCO--0715-001371'
+    select * from opodt where xordernum='PCMLCO--0715-001371'
+  select * from opddt where xordernum='PCMLCO--0715-001371'
+  select * from opdor where xordernum='PCMLCO--0715-001371'
+  select * from opchalland where xordernum='PCMLCO--0715-001371'
