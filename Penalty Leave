@@ -1,0 +1,12 @@
+SELECT ztime, zid, xdate, xemp, xleave, xtrnleave, xfdate, xtdate, xdaysreq, xdaysapp, xyear, xper, xlvtype, xpurpose, xstatusleave,xrecommendedby, zemail,xpflag FROM prleave where xemp='000361' and xdate='2013-01-07 00:00:00.000'
+
+
+iinsert into prleave ( ztime, zid, xdate, xemp, xleave, xtrnleave, xfdate, xtdate, xdaysreq, xdaysapp, xyear, xper, xlvtype, 
+xpurpose, xstatusleave,xrecommendedby, zemail,xpflag)
+select GETDATE(), zid,'2019-08-25' ,xemp,(select xname from prmst where xemp=pratd.xemp),'Casual Leave','Consumption(-)',
+'2019-07-26','2019-08-25'  ,floor(COUNT(*)/3),floor(COUNT(*)/3),YEAR('2019-08-25'),month('2019-08-25'),'1-Full Pay' ,
+'System Generated penalty leave : '+ CAST(floor(COUNT(*)/3) as varchar(10)) +' dys for '+ CAST(COUNT(*) as varchar(10))+' dys late',
+'Posted','asif.jahan@premiercement.com','asif.jahan@premiercement.com','P'
+from pratd where xdate between '2019-07-26' and '2019-08-25'  
+ and xatdstat='L' and xattype='RD' group by zid,xemp having COUNT(*)>2
+ and xemp in (select xemp from prmst where xlocation='Head Office')
